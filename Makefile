@@ -1,11 +1,11 @@
 setup:
-	python3 -m venv ~/.devops 
-	source ~/.devops/bin/activate
+	
+	python3 -m venv .venv
 
-install:
-
+install: setup
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
+
 	wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
 		chmod +x ./hadolint
 

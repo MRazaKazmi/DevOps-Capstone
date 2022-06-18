@@ -25,8 +25,6 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv ~/.devops 
-	          . ~/.devops/bin/activate
             make install
             
       - save_cache:
@@ -36,7 +34,6 @@ jobs:
       - run:
           name: run lint
           command: |
-            source ~/.devops/bin/activate
             make lint 
 
 workflows:
