@@ -72,5 +72,4 @@ workflows:
     jobs:
       - lint
       - push-image-to-registry:
-          requires: 
-            -lint
+          requires: [lint]
