@@ -42,30 +42,30 @@ jobs:
             . venv/bin/activate
             make lint
 
-    build-push-image-to-registry:
-      executor: python
-      steps:
-        - checkout
+  build-push-image-to-registry:
+    executor: python
+    steps:
+      - checkout
 
-        - run:
-            name: install dependencies
-            command: |
-              pip install awscli
-              
-        - setup_remote_docker:
-            version: 20.10.12
-            docker_layer_caching: true
+      - run:
+          name: install dependencies
+          command: |
+            pip install awscli
+            
+      - setup_remote_docker:
+          version: 20.10.12
+          docker_layer_caching: true
 
-        - run:
-            name: build an image
-            command: |
-              chmod +x ./scripts/build.sh
-              ./scripts/build.sh
-        - run:
-            name: push an image to registry
-            command: |
-              chmod +x ./scripts/upload.sh
-              ./scripts/upload.sh
+      - run:
+          name: build an image
+          command: |
+            chmod +x ./scripts/build.sh
+            ./scripts/build.sh
+      - run:
+          name: push an image to registry
+          command: |
+            chmod +x ./scripts/upload.sh
+            ./scripts/upload.sh
 
 workflows:
   udacity-project-5:
