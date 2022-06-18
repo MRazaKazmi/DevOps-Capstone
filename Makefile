@@ -8,5 +8,5 @@ install:
 
 
 lint:
-	./hadolint Dockerfile
+	./hadolint --ignore DL3013 --ignore DL3042 Dockerfile
 	pylint --disable=R,C,W1203,W1202 app.py
