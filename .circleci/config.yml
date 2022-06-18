@@ -71,5 +71,5 @@ workflows:
   udacity-project-5:
     jobs:
       - lint
-      - push-image-to-registry:
+      - build-push-image-to-registry:
           requires: [lint]
