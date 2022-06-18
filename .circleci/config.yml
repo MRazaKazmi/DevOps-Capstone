@@ -46,11 +46,6 @@ jobs:
     executor: python
     steps:
       - checkout
-
-      - run:
-          name: install dependencies
-          command: |
-            pip install awscli
             
       - setup_remote_docker:
           version: 20.10.12
