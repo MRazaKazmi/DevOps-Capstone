@@ -39,6 +39,6 @@ spec:
   selector:
     app: udacity-project5
   ports:
-    - port: 80
+    - port: 8000
       targetPort: 80
       protocol: TCP
