@@ -62,51 +62,24 @@ jobs:
             chmod +x ./scripts/upload.sh
             ./scripts/upload.sh
 
-  create-eks-cluster:
-    executor: aws
+  create-deployment:
+    docker:
+      - image: 'cimg/python:3.10'
+    parameters:
+      cluster-name:
+        description: |
+          udacity-project-5
+        type: string
     steps:
       - checkout
-      - run: yum -y install tar gzip
-      - run:
-          name: Install kubectl for eksctl
-          command: |
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            chmod +x ./kubectl
-            mv ./kubectl /usr/bin/
-            echo "kubectl: $(kubectl version --client)"
-      - run:
-          name: Install eksctl and create eks cluster
-          command: |
-            #curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C ./
-            chmod +x ./eksctl
-            mv ./eksctl /usr/bin/
-            echo "eksctl: $(eksctl version)"
-            export CLUSTER_NAME='my-cluster'
-            mkdir -p ./kube
-            touch ./kube/config
-            echo "created kube dir"
-            if eksctl get cluster --region=us-east-1 | grep $CLUSTER_NAME
-            then
-              echo "***EKS cluster already exists in aws"
-              echo "writing kubeconfig to ./kube for the existing cluster"
-              eksctl utils write-kubeconfig --cluster $CLUSTER_NAME --region us-east-1 --kubeconfig './kube/config'
-              echo "printing kube/config"
-              #cat ./kube/config
-              cd ./kube ls
-            else
-              eksctl create cluster --config-file=./cluster.yml
-              ls
-              cp /root/.kube/* ./kube
-              echo "printing kube/config"
-              #cat ./kube/config
-              cd ./kube
-              ls
-            fi
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/kube
-            
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment.yml
+          resource-name: deployment/udacity-project-5
  
 workflows:
   udacity-project-5:
@@ -116,4 +89,10 @@ workflows:
           requires: [lint]
       - create-eks-cluster:
           requires: [build-push-image-to-registry]
+      - aws-eks/create-cluster:
+        cluster-name:  udacity-project-5
+        requires: [build-push-image-to-registry]
+      - create-deployment:
+          cluster-name: udacity-project-5
+          requires: [aws-eks/create-cluster]
     
