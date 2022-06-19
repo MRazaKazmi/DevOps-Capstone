@@ -132,6 +132,7 @@ workflows:
       - create-deployment:
           cluster-name: udacity-project-5
       #    requires:  [create-cluster]
+           requires:  [build-push-image-to-registry]
       - test-cluster:
           cluster-name: udacity-project-5
           requires:  [create-deployment]
