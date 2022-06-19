@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-project5-deployment
+  labels:
+    app: udacity-project5-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udacity-project5
+  template:
+    metadata:
+      labels:
+        app: udacity-project5
+    spec:
+      containers:
+      - name: udacity-project5
+        image: 230793/udacity-project-5:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
