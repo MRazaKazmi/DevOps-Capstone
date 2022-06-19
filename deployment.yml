@@ -11,7 +11,7 @@ spec:
       app: udacity-project5
   strategy:
     rollingUpdate:
-      maxSurge: 25%
+    #  maxSurge: 25%
       maxUnavailable: 1
     type: RollingUpdate
   template:
