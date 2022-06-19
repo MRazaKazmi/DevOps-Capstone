@@ -87,8 +87,6 @@ workflows:
       - lint
       - build-push-image-to-registry:
           requires: [lint]
-      - create-eks-cluster:
-          requires: [build-push-image-to-registry]
       - aws-eks/create-cluster:
         cluster-name:  udacity-project-5
         requires: [build-push-image-to-registry]
