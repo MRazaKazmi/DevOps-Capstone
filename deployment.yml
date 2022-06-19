@@ -9,11 +9,11 @@ spec:
   selector:
     matchLabels:
       app: udacity-project5
-  strategy:
-    rollingUpdate:
+  #strategy:
+    #rollingUpdate:
     #  maxSurge: 25%
-      maxUnavailable: 1
-    type: RollingUpdate
+      #maxUnavailable: 1
+    #type: RollingUpdate
   template:
     metadata:
       labels:
