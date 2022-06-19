@@ -62,24 +62,27 @@ jobs:
             chmod +x ./scripts/upload.sh
             ./scripts/upload.sh
 
-  create-deployment:
+  create-cluster:
     docker:
       - image: 'cimg/python:3.10'
     parameters:
       cluster-name:
         description: |
-          udacity-project-5
+          Name of the EKS cluster
         type: string
     steps:
       - checkout
-      - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
+      - aws-eks/install-aws-iam-authenticator:
+          release-tag: ''
+      - aws-eks/create-cluster:
           cluster-name: << parameters.cluster-name >>
-          install-kubectl: true
-      - kubernetes/create-or-update-resource:
-          get-rollout-status: true
-          resource-file-path: deployment.yml
-          resource-name: deployment/udacity-project-5
+          ssh-access: false
+          ssh-public-key: ''
+          node-type: t2.small
+          nodes-max: 4
+          
+
+  
  
 workflows:
   udacity-project-5:
@@ -87,9 +90,8 @@ workflows:
       - lint
       - build-push-image-to-registry:
           requires: [lint]
-      - aws-eks/create-cluster:
-        cluster-name:  udacity-project-5
-        requires: [lint]
-      - create-deployment:
-          requires: [aws-eks/create-cluster]
+      - create-small-cluster:
+          cluster-name: udacity-project-5
+          requires: [lint,build-push-image-to-registry]
+    
     
