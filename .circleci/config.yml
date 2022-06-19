@@ -135,8 +135,4 @@ workflows:
       - test-cluster:
           cluster-name: udacity-project-5
           requires:  [create-deployment]
-          
-
-
-    
     
