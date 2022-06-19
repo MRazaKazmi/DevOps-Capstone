@@ -89,7 +89,7 @@ workflows:
           requires: [lint]
       - aws-eks/create-cluster:
         cluster-name:  udacity-project-5
-        requires: [build-push-image-to-registry]
+        requires: [lint]
       - create-deployment:
           cluster-name: udacity-project-5
           requires: [aws-eks/create-cluster]
