@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udacity-project5-deployment
+  name: udacity-project5
   labels:
-    app: udacity-project5-app
+    app: udacity-project5
 spec:
   replicas: 1
   selector:

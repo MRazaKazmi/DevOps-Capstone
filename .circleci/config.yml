@@ -123,12 +123,12 @@ jobs:
 workflows:
   udacity-project-5:
     jobs:
-      - lint
-      - build-push-image-to-registry:
-          requires: [lint]
-      - create-cluster:
-          cluster-name: udacity-project-5
-          requires: [lint,build-push-image-to-registry]
+     # - lint
+     # - build-push-image-to-registry:
+       #   requires: [lint]
+     # - create-cluster:
+       #   cluster-name: udacity-project-5
+       #   requires: [lint,build-push-image-to-registry]
       - create-deployment:
           cluster-name: udacity-project-5
           requires:  [create-cluster]
