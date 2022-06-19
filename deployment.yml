@@ -33,11 +33,10 @@ kind: Service
 metadata:
   name: udacity-project5
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: udacity-project5
   ports:
-    - port: 8000
+    - protocol: TCP
+      port: 80
       targetPort: 80
-      protocol: TCP
-      nodePort: 30100
