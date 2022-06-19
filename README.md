@@ -1,6 +1,6 @@
 # Udacity-DevOps-Project5
 
-## Steps in Completing Your Project
+## Steps in Completing Project
 
 ### Step 1: Propose and Scope the Project
 
