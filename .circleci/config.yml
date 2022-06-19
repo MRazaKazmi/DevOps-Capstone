@@ -90,7 +90,7 @@ workflows:
       - lint
       - build-push-image-to-registry:
           requires: [lint]
-      - create-small-cluster:
+      - create-cluster:
           cluster-name: udacity-project-5
           requires: [lint,build-push-image-to-registry]
     
