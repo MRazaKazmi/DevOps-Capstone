@@ -134,7 +134,7 @@ workflows:
           requires:  [create-cluster]
       - test-cluster:
           cluster-name: udacity-project-5
-          requires:  [reate-deployment]
+          requires:  [create-deployment]
           
 
 
