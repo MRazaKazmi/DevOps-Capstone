@@ -2,7 +2,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-lint_error =
 @app.route('/')
 def home():
     return "<h1 style='text-align: center;'>Welcome to Udacity Cloud DevOps Nanodegree Project 5!</h1>"
