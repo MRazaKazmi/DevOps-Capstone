@@ -81,6 +81,42 @@ jobs:
           node-type: t2.small
           nodes-max: 4
           
+  create-deployment:
+    docker:
+      - image: 'cimg/python:3.10'
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+    steps:
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment.yml
+          resource-name: deployment/udacity-project-5-deployment
+
+  test-cluster:
+    docker:
+      - image: 'cimg/python:3.10'
+    parameters:
+      cluster-name:
+        description: |
+          udacity-project-5
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          name: Test cluster
+          command: |
+            kubectl get svc
+            kubectl get nodes
+            kubectl get deployment
 
   
  
@@ -93,7 +129,14 @@ workflows:
       - create-cluster:
           cluster-name: udacity-project-5
           requires: [lint,build-push-image-to-registry]
-
+      - create-deployment:
+          cluster-name: udacity-project-5
+          requires:  [create-cluster]
+      - test-cluster:
+          cluster-name: udacity-project-5
+          requires:  [reate-deployment]
           
+
+
     
     
