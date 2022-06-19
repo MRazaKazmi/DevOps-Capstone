@@ -131,7 +131,7 @@ workflows:
        #   requires: [lint,build-push-image-to-registry]
       - create-deployment:
           cluster-name: udacity-project-5
-          requires:  [create-cluster]
+       #   requires:  [create-cluster]
       - test-cluster:
           cluster-name: udacity-project-5
           requires:  [create-deployment]
