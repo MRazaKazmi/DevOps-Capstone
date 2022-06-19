@@ -91,6 +91,5 @@ workflows:
         cluster-name:  udacity-project-5
         requires: [lint]
       - create-deployment:
-          cluster-name: udacity-project-5
           requires: [aws-eks/create-cluster]
     
