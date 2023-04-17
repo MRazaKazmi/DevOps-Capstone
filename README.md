@@ -1,4 +1,4 @@
-# Udacity-DevOps-Project5
+# Cloud DevOps Engineering - Capstone
 
 ## Steps in Completing Project
 
